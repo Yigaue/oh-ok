@@ -1,0 +1,28 @@
+{
+  "name": "ohok",
+  "version": "1.0.0",
+  "description": "Ohok pronouced(oh, okay!)is a lightweight, customizable text editor widget for web applications.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "open demo/index.html",
+    "build": "echo 'Building package...'",
+    "test": "echo 'No tests yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yigaue/oh-ok.git"
+  },
+  "keywords": [
+    "text-editor",
+    "widget",
+    "rich-text",
+    "editor",
+    "open-source"
+  ],
+  "author": "yigaue",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yigaue/oh-ok/issues"
+  },
+  "homepage": "https://github.com/Yigaue/oh-ok#readme"
+}
