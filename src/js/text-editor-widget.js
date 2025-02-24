@@ -3,6 +3,7 @@ class OhOkTextEditor {
     this.container = config.element || document.body;
     this.initEditor();
     this.toolbarHandlers();
+    this.countDisplay();
   }
 
   initEditor() {
@@ -58,6 +59,15 @@ class OhOkTextEditor {
     `;
 
     this.editor = this.container.querySelector('.oh-ok-editor-content');
+  }
+
+  // Public methods
+  getContent() {
+    return this.editor.innerHTML;
+  }
+
+  setContent(content) {
+    this.editor.innerHTML = content;
   }
 
   toolbarHandlers() {
@@ -121,6 +131,20 @@ class OhOkTextEditor {
       }
       document.execCommand('createLink', false, url);
     }
+  }
+
+  countDisplay() {
+    const countDisplay = this.container.querySelector('.oh-ok-count-display');
+
+    const updateCount = () => {
+      const text = this.editor.innerText.trim();
+      const words = text.split(/\s+/).filter(word => word.length > 0);
+      const characters = text.length;
+      countDisplay.textContent = `Words: ${words.length} | Characters: ${characters}`;
+    };
+
+    this.editor.addEventListener('input', updateCount);
+    updateCount();
   }
 }
 
