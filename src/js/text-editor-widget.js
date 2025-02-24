@@ -6,7 +6,7 @@ class OhOkTextEditor {
 
   initEditor() {
     this.container.innerHTML = `
-      <div class="text-editor-widget">
+      <div class="oh-ok-text-editor-widget">
         <div class="oh-ok-toolbar">
           <button data-command="bold" title="Bold"><strong>B</strong></button>
           <button data-command="italic" title="Italic"><em>I</em></button>
@@ -51,10 +51,77 @@ class OhOkTextEditor {
             📷
           </button>
         </div>
-        <div class="editor-content" contenteditable="true"></div>
-        <div class="count-display">Words: 0 | Characters: 0</div>
+        <div class="oh-ok-editor-content" contenteditable="true"></div>
+        <div class="oh-ok-count-display">Words: 0 | Characters: 0</div>
       </div>
     `;
+  }
+
+  addToolbarHandlers() {
+    const strikethroughButton = this.container.querySelector('[data-command="strikeThrough"]');
+    const highlightColorInput = this.container.querySelector('.highlight-color');
+
+    highlightColorInput.addEventListener('input', () => {
+        highlightPreview.style.backgroundColor = highlightColorInput.value;
+    });
+
+    // Update button state
+    this.editor.addEventListener('input', () => {
+        const isStrikethrough = document.queryCommandState('strikeThrough');
+        strikethroughButton.classList.toggle('active', isStrikethrough);
+    });
+
+    // Button commands
+    this.container.querySelectorAll('[data-command]').forEach(button => {
+      button.addEventListener('click', () => {
+          if (button.dataset.command === 'highlight') {
+              this.handleHighlight(highlightColorInput.value);
+          } else if (button.dataset.command === 'removeHighlight') {
+              this.removeAllFormating();
+          } else if (button.dataset.command === 'createLink') {
+              this.handleLinkInsertion();
+          } else {
+              document.execCommand(button.dataset.command, false);
+          }
+          this.editor.focus();
+      });
+    });
+
+    this.container.querySelector('.font-size').addEventListener('change', (e) => {
+      document.execCommand('fontSize', false, e.target.value);
+      this.editor.focus();
+    });
+
+    this.container.querySelector('.color-picker').addEventListener('input', (e) => {
+      document.execCommand('foreColor', false, e.target.value);
+      this.editor.focus();
+    });
+
+    this.container.querySelector('.font-family').addEventListener('change', (e) => {
+      document.execCommand('fontName', false, e.target.value);
+      this.editor.focus();
+    });
+  }
+
+  handleHighlight(color) {
+      if (color) {
+        document.execCommand('styleWithCSS', false, true);
+        document.execCommand('backColor', false, color);
+      }
+    }
+
+  removeAllFormating() {
+    document.execCommand('removeFormat', false);
+  }
+
+  handleLinkInsertion() {
+    let url = prompt('Enter the URL:');
+    if (url) {
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = `https://${url}`; // Prepend https:// if missing
+        }
+        document.execCommand('createLink', false, url);
+    }
   }
 }
 
