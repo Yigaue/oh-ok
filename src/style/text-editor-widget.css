@@ -1,0 +1,28 @@
+/* oh-ok-toolbar styling */
+.oh-ok-toolbar {
+  padding: 10px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.oh-ok-toolbar button {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.oh-ok-toolbar button:hover {
+  background: #e6e6e6;
+}
+
+.oh-ok-toolbar select {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}

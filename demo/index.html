@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ohok Text Editor Demo</title>
+  <link rel="stylesheet" href="../src/style/text-editor-widget.css">
+</head>
+
+<body>
+  <div id="editor-container"></div>
+  <script type="module">
+    import OhOkTextEditor from '../src/js/index.js';
+    const editor = new OhOkTextEditor({
+      element: document.getElementById('editor-container')
+    });
+  </script>
+</body>
+
+</html>
