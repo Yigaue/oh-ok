@@ -2,6 +2,7 @@ class OhOkTextEditor {
   constructor(config) {
     this.container = config.element || document.body;
     this.initEditor();
+    this.toolbarHandlers();
   }
 
   initEditor() {
@@ -55,35 +56,33 @@ class OhOkTextEditor {
         <div class="oh-ok-count-display">Words: 0 | Characters: 0</div>
       </div>
     `;
+
+    this.editor = this.container.querySelector('.oh-ok-editor-content');
   }
 
-  addToolbarHandlers() {
+  toolbarHandlers() {
     const strikethroughButton = this.container.querySelector('[data-command="strikeThrough"]');
     const highlightColorInput = this.container.querySelector('.highlight-color');
 
-    highlightColorInput.addEventListener('input', () => {
-        highlightPreview.style.backgroundColor = highlightColorInput.value;
-    });
-
     // Update button state
     this.editor.addEventListener('input', () => {
-        const isStrikethrough = document.queryCommandState('strikeThrough');
-        strikethroughButton.classList.toggle('active', isStrikethrough);
+      const isStrikethrough = document.queryCommandState('strikeThrough');
+      strikethroughButton.classList.toggle('active', isStrikethrough);
     });
 
     // Button commands
     this.container.querySelectorAll('[data-command]').forEach(button => {
       button.addEventListener('click', () => {
-          if (button.dataset.command === 'highlight') {
-              this.handleHighlight(highlightColorInput.value);
-          } else if (button.dataset.command === 'removeHighlight') {
-              this.removeAllFormating();
-          } else if (button.dataset.command === 'createLink') {
-              this.handleLinkInsertion();
-          } else {
-              document.execCommand(button.dataset.command, false);
-          }
-          this.editor.focus();
+        if (button.dataset.command === 'highlight') {
+          this.handleHighlight(highlightColorInput.value);
+        } else if (button.dataset.command === 'removeHighlight') {
+          this.removeAllFormating();
+        } else if (button.dataset.command === 'createLink') {
+          this.handleLinkInsertion();
+        } else {
+          document.execCommand(button.dataset.command, false);
+        }
+        this.editor.focus();
       });
     });
 
@@ -104,11 +103,11 @@ class OhOkTextEditor {
   }
 
   handleHighlight(color) {
-      if (color) {
-        document.execCommand('styleWithCSS', false, true);
-        document.execCommand('backColor', false, color);
-      }
+    if (color) {
+      document.execCommand('styleWithCSS', false, true);
+      document.execCommand('backColor', false, color);
     }
+  }
 
   removeAllFormating() {
     document.execCommand('removeFormat', false);
@@ -117,10 +116,10 @@ class OhOkTextEditor {
   handleLinkInsertion() {
     let url = prompt('Enter the URL:');
     if (url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            url = `https://${url}`; // Prepend https:// if missing
-        }
-        document.execCommand('createLink', false, url);
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = `https://${url}`;
+      }
+      document.execCommand('createLink', false, url);
     }
   }
 }

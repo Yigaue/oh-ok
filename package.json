@@ -2,11 +2,16 @@
   "name": "ohok",
   "version": "1.0.0",
   "description": "Ohok pronouced(oh, okay!)is a lightweight, customizable text editor widget for web applications.",
-  "main": "src/index.js",
+  "main": "src/js/index.js",
   "scripts": {
     "start": "open demo/index.html",
-    "build": "echo 'Building package...'",
-    "test": "echo 'No tests yet'"
+    "test": "echo 'No tests yet'",
+    "dev": "rollup -c --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "build:js": "rollup -c",
+    "build:css": "cleancss -o dist/ohok.min.css src/style/text-editor-widget.css",
+    "build": "npm run build:js && npm run build:css"
   },
   "repository": {
     "type": "git",
@@ -20,9 +25,19 @@
     "open-source"
   ],
   "author": "yigaue",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/Yigaue/oh-ok/issues"
   },
-  "homepage": "https://github.com/Yigaue/oh-ok#readme"
+  "homepage": "https://github.com/Yigaue/oh-ok#readme",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "rollup": "^2.79.2",
+    "rollup-plugin-terser": "^7.0.2"
+  }
 }
