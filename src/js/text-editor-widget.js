@@ -1,9 +1,8 @@
 class OhOkTextEditor {
   constructor(config) {
     this.container = config.element || document.body;
+    this.editor = null;
     this.initEditor();
-    this.toolbarHandlers();
-    this.countDisplay();
   }
 
   initEditor() {
@@ -48,10 +47,6 @@ class OhOkTextEditor {
           <button data-command="redo" title="Redo">↻</button>
           <button data-command="createLink" title="Insert Link">🔗</button>
           <button data-command="unlink" title="Remove Link">❌</button>
-          <button class="image-upload" title="Insert Image">
-            <input type="file" class="image-input" accept="image/*" hidden>
-            📷
-          </button>
         </div>
         <div class="oh-ok-editor-content" contenteditable="true"></div>
         <div class="oh-ok-count-display">Words: 0 | Characters: 0</div>
@@ -59,6 +54,10 @@ class OhOkTextEditor {
     `;
 
     this.editor = this.container.querySelector('.oh-ok-editor-content');
+
+    this.toolbarHandlers();
+    this.countDisplay();
+    this.AutoSave();
   }
 
   // Public methods
@@ -145,6 +144,17 @@ class OhOkTextEditor {
 
     this.editor.addEventListener('input', updateCount);
     updateCount();
+  }
+
+  autoSave() {
+    this.editor.addEventListener('input', () => {
+      localStorage.setItem('editorContent', this.editor.innerHTML);
+    });
+
+    const savedContent = localStorage.getItem('editorContent');
+    if (savedContent) {
+      this.editor.innerHTML = savedContent;
+    }
   }
 }
 
