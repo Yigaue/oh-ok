@@ -1,6 +1,6 @@
 # Ohok
 
-Ohok (pronounced "oh-okay") is a lightweight and customizable text editor widget designed for web applications. It is easy to integrate and highly extensible.
+Ohok (pronounced "oh-okay") is a lightweight and customizable text editor widget designed for web applications. It is easy to integrate and highly extensible. See hosted [demo](https://editor.2kays.com).
 
 ## Features
 
