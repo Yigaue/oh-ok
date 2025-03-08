@@ -49,6 +49,7 @@ class OhOkTextEditor {
           <button data-command="createLink" title="Insert Link">🔗</button>
           <button data-command="unlink" title="Remove Link">❌</button>
           <button data-command="print" title="Print all or print a selection">🖨️</button>
+          <button data-command="insertCode" title="Insert Code">{<?>}</button>
         </div>
         <div class="oh-ok-editor-content" contenteditable="true"></div>
         <div class="oh-ok-count-display">Words: 0 | Characters: 0</div>
@@ -60,6 +61,7 @@ class OhOkTextEditor {
     this.toolbarHandlers();
     this.countDisplay();
     this.autoSave();
+    this.pasteHandler();
   }
 
   // Public methods
@@ -92,6 +94,8 @@ class OhOkTextEditor {
           this.handleLinkInsertion();
         } else if (button.dataset.command === 'print') {
           this.handlePrint();
+        } else if (button.dataset.command === 'insertCode') {
+          this.handleInsertCode();
         } else {
           document.execCommand(button.dataset.command, false);
         }
@@ -165,14 +169,22 @@ class OhOkTextEditor {
     const selection = window.getSelection();
     const content = selection.toString() || this.editor.innerHTML;
     const printWindow = window.open('', '', 'width=900,height=700');
+    if (!printWindow) {
+      alert('Please allow pop-ups for this site to print.');
+      return;
+    }
     printWindow.document.write(`
       <html>
           <head>
-              <title>Print</title>
+              <title></title>
               <style>
+                  @page {
+                    size: auto;
+                    margin: 40;
+                  }
                   body { font-family: Arial, sans-serif; }
                   img { max-width: 100%; height: auto; }
-                  .editor-content { padding: 20px; }
+                  .oh-ok-editor-content { padding: 20px; }
               </style>
           </head>
           <body>
@@ -189,6 +201,83 @@ class OhOkTextEditor {
       </html>
     `);
     printWindow.document.close();
+  }
+
+  handleInsertCode() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const parentElement = range.commonAncestorContainer;
+      const isInsideCodeBlock = this.isInsideCodeBlock(parentElement);
+
+      if (!range.collapsed && !isInsideCodeBlock) {
+        const codeElement = document.createElement('code');
+        codeElement.textContent = range.toString();
+        const preElement = document.createElement('pre');
+        preElement.appendChild(codeElement);
+        range.deleteContents();
+        range.insertNode(preElement);
+      } 
+      
+      if(range.collapsed && !isInsideCodeBlock) {
+        const codeElement = document.createElement('code');
+        const code = '/';
+        const preElement = document.createElement('pre');
+        codeElement.textContent = code;
+        preElement.appendChild(codeElement);
+
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.insertNode(preElement); //Insert the pre element
+          range.collapse(false);
+        }
+      }
+      range.collapse(false); 
+    }
+
+    this.editor.focus();
+  }
+
+  pasteHandler() {
+    this.editor.addEventListener('paste', (e) => {
+      e.preventDefault();
+
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const parentElement = range.commonAncestorContainer;
+
+        const isInsideCodeBlock = this.isInsideCodeBlock(parentElement);
+
+        if (isInsideCodeBlock) {
+          const codeElement = document.createElement('code');
+          codeElement.textContent = text;
+          range.deleteContents();
+          range.insertNode(codeElement);
+          range.collapse(false);
+        } else {
+          const textNode = document.createTextNode(text);
+          range.deleteContents();
+          range.insertNode(textNode);
+          range.collapse(false);
+        }
+      }
+
+      this.editor.focus();
+    });
+  }
+
+  isInsideCodeBlock(element) {
+    while (element && element !== this.editor) {
+      if (element.tagName === 'CODE' || element.tagName === 'PRE') {
+        return true;
+      }
+      element = element.parentElement;
+    }
+    return false;
   }
 }
 

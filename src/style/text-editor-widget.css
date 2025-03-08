@@ -36,6 +36,35 @@
   text-align: justify;
 }
 
+editor-content ul,
+.oh-ok-editor-content ol {
+  padding-left: 40px;
+  margin: 10px 0;
+
+}
+
+.oh-ok-editor-content ul {
+  list-style-type: disc;
+}
+
+.oh-ok-editor-content ol {
+  list-style-type: decimal;
+}
+
+.oh-ok-editor-content li {
+  line-height: 1.6;
+}
+
+.oh-ok-editor-content ul ul,
+.oh-ok-editor-content ol ol {
+  padding-left: 20px;
+}
+
+.oh-ok-editor-content s {
+  text-decoration: line-through;
+  color: #666;
+}
+
 .oh-ok-editor-content:focus {
   outline: none;
 }
@@ -47,6 +76,10 @@
   max-width: 800px;
   margin: 20px auto;
   padding-bottom: 30px;
+}
+
+.oh-ok-toolbar button.active {
+  background: #ddd;
 }
 
 .oh-ok-count-display {
@@ -73,25 +106,70 @@
   pointer-events: none;
 }
 
+.oh-ok-editor-content [style*="font-family"] {
+  font-family: inherit !important;
+}
+
+.oh-ok-editor-content a[href] {
+  position: relative;
+}
+
+.oh-ok-editor-content a[href]:hover::after {
+  content: attr(href);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.oh-ok-editor-content span[style*="background-color"] {
+  padding: 2px 4px;
+  /* Add padding for better visibility */
+  border-radius: 3px;
+  /* Rounded corners */
+}
+
 
 @media print {
 
-  .toolbar,
-  .count-display {
+  .oh-ok-toolbar,
+  .oh-ok-count-display {
     display: none;
-    /* Hide toolbar and count display when printing */
   }
-
-  .editor-content {
+  
+  .oh-ok-editor-content{
     padding: 20px;
-    /* Add padding for better readability */
     font-family: Arial, sans-serif;
-    /* Use a standard font for printing */
   }
 
   img {
     max-width: 100%;
-    /* Ensure images fit within the page */
     height: auto;
   }
+}
+
+
+.oh-ok-editor-content pre {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 10px 0;
+}
+
+.oh-ok-editor-content code {
+  font-family: 'Courier New', monospace;
+  color: #d63384;
+  background: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
