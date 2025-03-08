@@ -48,6 +48,7 @@ class OhOkTextEditor {
           <button data-command="redo" title="Redo">↻</button>
           <button data-command="createLink" title="Insert Link">🔗</button>
           <button data-command="unlink" title="Remove Link">❌</button>
+          <button data-command="print" title="Print all or print a selection">🖨️</button>
         </div>
         <div class="oh-ok-editor-content" contenteditable="true"></div>
         <div class="oh-ok-count-display">Words: 0 | Characters: 0</div>
@@ -89,6 +90,8 @@ class OhOkTextEditor {
           this.removeAllFormating();
         } else if (button.dataset.command === 'createLink') {
           this.handleLinkInsertion();
+        } else if (button.dataset.command === 'print') {
+          this.handlePrint();
         } else {
           document.execCommand(button.dataset.command, false);
         }
@@ -156,6 +159,36 @@ class OhOkTextEditor {
     if (savedContent) {
       this.editor.innerHTML = savedContent;
     }
+  }
+
+  handlePrint() {
+    const selection = window.getSelection();
+    const content = selection.toString() || this.editor.innerHTML;
+    const printWindow = window.open('', '', 'width=900,height=700');
+    printWindow.document.write(`
+      <html>
+          <head>
+              <title>Print</title>
+              <style>
+                  body { font-family: Arial, sans-serif; }
+                  img { max-width: 100%; height: auto; }
+                  .editor-content { padding: 20px; }
+              </style>
+          </head>
+          <body>
+              <div class="editor-content">${content}</div>
+              <script>
+                  window.onload = () => {
+                      window.print(); // Open print dialog
+                      window.onafterprint = () => {
+                          window.close(); // Close the print window after printing
+                      };
+                  };
+              </script>
+          </body>
+      </html>
+    `);
+    printWindow.document.close();
   }
 }
 
