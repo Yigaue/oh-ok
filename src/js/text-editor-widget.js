@@ -39,9 +39,10 @@ class OhOkTextEditor {
           <input type="color" class="color-picker" title="Text Color">
           <input type="color" class="highlight-color" title="Highlight Color" value="#FFFF00">
           <button data-command="highlight" title="Highlight Text">🖍️</button>
-          <button data-command="removeHighlight" title="Remove Highlight">❌</button>
+          <button data-command="removeHighlight" title="Remove formatting">❌</button>
           <button data-command="justifyLeft" title="Align Left">⬅</button>
           <button data-command="justifyCenter" title="Center">↔</button>
+          <button data-command="justifyFull" title="Justify Text">≡</button>
           <button data-command="justifyRight" title="Align Right">➡</button>
           <button data-command="undo" title="Undo">↺</button>
           <button data-command="redo" title="Redo">↻</button>
@@ -57,7 +58,7 @@ class OhOkTextEditor {
 
     this.toolbarHandlers();
     this.countDisplay();
-    this.AutoSave();
+    this.autoSave();
   }
 
   // Public methods
