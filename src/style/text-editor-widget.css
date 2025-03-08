@@ -71,3 +71,26 @@
   border-radius: 3px;
   pointer-events: none;
 }
+
+
+@media print {
+
+  .toolbar,
+  .count-display {
+    display: none;
+    /* Hide toolbar and count display when printing */
+  }
+
+  .editor-content {
+    padding: 20px;
+    /* Add padding for better readability */
+    font-family: Arial, sans-serif;
+    /* Use a standard font for printing */
+  }
+
+  img {
+    max-width: 100%;
+    /* Ensure images fit within the page */
+    height: auto;
+  }
+}
