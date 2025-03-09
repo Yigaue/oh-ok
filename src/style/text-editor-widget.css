@@ -8,6 +8,15 @@
   flex-wrap: wrap;
 }
 
+.oh-ok-toolbar.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
 .oh-ok-toolbar button {
   padding: 6px 12px;
   background: white;

@@ -8,7 +8,7 @@ class OhOkTextEditor {
   initEditor() {
     this.container.innerHTML = `
       <div class="oh-ok-text-editor-widget">
-        <div class="oh-ok-toolbar">
+        <div class="oh-ok-toolbar sticky">
           <button data-command="bold" title="Bold"><strong>B</strong></button>
           <button data-command="italic" title="Italic"><em>I</em></button>
           <button data-command="underline" title="Underline"><u>U</u></button>
