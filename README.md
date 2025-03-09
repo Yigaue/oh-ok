@@ -1,4 +1,4 @@
-# Ohok
+# Ohok Editor
 
 Ohok (pronounced "oh-okay") is a lightweight and customizable text editor widget designed for web applications. It is easy to integrate and highly extensible. See hosted [demo](https://editor.2kays.com).
 
@@ -15,9 +15,9 @@ Ohok (pronounced "oh-okay") is a lightweight and customizable text editor widget
 
 Install via npm:
 
-## Contributing to Ohok
+## Contributing to Ohok editor
 
-Thank you for your interest in contributing to Ohok! We welcome all contributions.
+Thank you for your interest in contributing to Ohok editor! We welcome all contributions.
 
 ## How to Contribute
 
@@ -37,4 +37,4 @@ Thank you for your interest in contributing to Ohok! We welcome all contribution
 
 If you find a bug or have a suggestion, please open an [issue](https://github.com/Yigaue/oh-ok/issues) on GitHub with steps to reproduce the problem.
 
-Thank you for helping improve Ohok!
+Thank you for helping improve Ohok editor!
